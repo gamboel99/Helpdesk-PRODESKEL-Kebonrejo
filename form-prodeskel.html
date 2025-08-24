@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRODESKEL - Sistem Helpdesk Desa Kebonrejo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --secondary: #34a853;
+            --danger: #ea4335;
+            --warning: #fbbc04;
+            --light: #f8f9fa;
+            --dark: #202124;
+            --gray: #5f6368;
+            --border: #dadce0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            background: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo i {
+            font-size: 40px;
+            color: var(--primary);
+        }
+        
+        .header-text h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .header-text p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 25%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .form-section {
+            padding: 25px;
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+        }
+        
+        .help-text {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        .gps-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .gps-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .gps-btn i {
+            margin-right: 8px;
+        }
+        
+        .gps-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gps-status {
+            font-size: 14px;
+            color: var(--gray);
+            padding: 8px 12px;
+            background: var(--light);
+            border-radius: 8px;
+        }
+        
+        .coordinates {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .coordinates input {
+            background-color: #f9f9f9;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-prev {
+            background-color: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-prev:hover {
+            background-color: #f0f5ff;
+        }
+        
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, var(--secondary), #2c8e46);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 168, 83, 0.3);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .result-container {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+        
+        .result-header {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .index-result {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .index-value {
+            font-size: 52px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .index-label {
+            font-size: 20px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .index-detail {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .index-category {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .category-value {
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 14px;
+            background: var(--light);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .btn-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .coordinates {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .index-detail {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-house-circle-check"></i>
+                </div>
+                <div class="header-text">
+                    <h1>PRODESKEL - Desa Kebonrejo</h1>
+                    <p>Sistem Helpdesk Pengumpulan Data Desa</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span>Progres Pengisian Formulir</span>
+                <span id="progressText">25%</span>
+            </div>
+        </div>
+        
+        <form id="prodeskelForm">
+            <!-- Section 1: Data Identitas -->
+            <div class="form-section active" id="section1">
+                <h2 class="section-title"><i class="fas fa-user"></i> Data Identitas</h2>
+                
+                <div class="form-group">
+                    <label for="nama" class="required">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap">
+                </div>
+                
+                <div class="form-group">
+                    <label for="nik" class="required">NIK</label>
+                    <input type="text" id="nik" name="nik" required pattern="[0-9]{16}" placeholder="Masukkan 16 digit NIK">
+                    <div class="help-text">Masukkan 16 digit NIK tanpa tanda pemisah</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="noKK" class="required">Nomor Kartu Keluarga</label>
+                    <input type="text" id="noKK" name="noKK" required pattern="[0-9]{16}" placeholder="Masukkan 16 digit No. KK">
+                </div>
+                
+                <div class="form-group">
+                    <label for="alamat" class="required">Alamat Lengkap</label>
+                    <textarea id="alamat" name="alamat" rows="3" required placeholder="Masukkan alamat lengkap"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rt" class="required">RT/RW</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="rt" name="rt" placeholder="RT" min="1" required style="flex: 1;">
+                        <input type="number" id="rw" name="rw" placeholder="RW" min="1" required style="flex: 1;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gps">Koordinat Lokasi</label>
+                    <div class="gps-container">
+                        <button type="button" class="gps-btn" id="getLocation">
+                            <i class="fas fa-location-dot"></i> Ambil Koordinat GPS
+                        </button>
+                        <span class="gps-status" id="gpsStatus">Belum mengambil lokasi</span>
+                    </div>
+                    <div class="coordinates">
+                        <input type="text" id="latitude" name="latitude" placeholder="Latitude" readonly>
+                        <input type="text" id="longitude" name="longitude" placeholder="Longitude" readonly>
+                    </div>
+                </div>
+                
+                <div class="btn-container">
+                    <div></div>
+                    <button type="button" class="btn btn-next" onclick="showSection(2)">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Section 2: Data Sosial Ekonomi -->
+            <div class="form-section" id="section2">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Data Sosial Ekonomi</h2>
+                
+                <div class="form-group">
+                    <label for="pendidikan" class="required">Pendidikan Terakhir</label>
+                    <select id="pendidikan" name="pendidikan" required>
+                        <option value="">Pilih Pendidikan</option>
+                        <option value="1">Tidak Sekolah</option>
+                        <option value="2">SD/Sederajat</option>
+                        <option value="3">SMP/Sederajat</option>
+                        <option value="4">SMA/Sederajat</option>
+                        <option value="5">Diploma</option>
+                        <option value="6">Sarjana</option>
+                        <option value="7">Pascasarjana</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="pekerjaan" class="required">Pekerjaan Utama</label>
+                    <select id="pekerjaan" name="pekerjaan" required>
+                        <option value="">Pilih Pekerjaan</option>
+                        <option value="1">Tidak Bekerja</option>
+                        <option value="2">Pelajar/Mahasiswa</option>
+                        <option value="3">PNS</option>
+                        <option value="4">TNI/Polri</option>
+                        <option value="5">Karyawan Swasta</option>
+                        <option value="6">Wiraswasta</option>
+                        <option value="7">Petani</option>
+                        <option value="8">Nelayan</option>
+                        <option value="9">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="penghasilan" class="required">Rata-rata Penghasilan per Bulan</label>
+                    <select id="penghasilan" name="penghasilan" required>
+                        <option value="">Pilih Penghasilan</option>
+                        <option value="1">Di Bawah Rp 500.000</option>
+                        <option value="2">Rp 500.000 - Rp 1.000.000</option>
+                        <option value="3">Rp 1.000.000 - Rp 2.000.000</option>
+                        <option value="4">Rp 2.000.000 - Rp 3.000.000</option>
+                        <option value="5">Rp 3.000.000 - Rp 5.000.000</option>
+                        <option value="6">Di Atas Rp 5.000.000</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jaminanSosial" class="required">Kepesertaan Jaminan Sosial</label>
+                    <select id="jaminanSosial" name="jaminanSosial" required>
+                        <option value="">Pilih Status</option>
+                        <option value="1">BPJS Kesehatan</option>
+                        <option value="2">BPJS Ketenagakerjaan</option>
+                        <option value="3">Kedua-duanya</option>
+                        <option value="4">Tidak Ada</option>
+                    </select>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="showSection(1)"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                    <button type="button" class="btn btn-next" onclick="showSection(3)">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Section 3: Data Kepemilikan Aset -->
+            <div class="form-section" id="section3">
+                <h2 class="section-title"><i class="fas fa-home"></i> Data Kepemilikan Aset</h2>
+                
+                <div class="form-group">
+                    <label for="statusRumah" class="required">Status Kepemilikan Rumah</label>
+                    <select id="statusRumah" name="statusRumah" required>
+                        <option value="">Pilih Status</option>
+                        <option value="1">Milik Sendiri</option>
+                        <option value="2">Sewa</option>
+                        <option value="3">Menumpang</option>
+                        <option value="4">Dinas</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="luasRumah" class="required">Luas Lantai Rumah (m²)</label>
+                    <input type="number" id="luasRumah" name="luasRumah" min="0" required placeholder="Contoh: 36">
+                </div>
+                
+                <div class="form-group">
+                    <label for="jenisLantai" class="required">Jenis Lantai Terluas</label>
+                    <select id="jenisLantai" name="jenisLantai" required>
+                        <option value="">Pilih Jenis Lantai</option>
+                        <option value="1">Marmer/Granit</option>
+                        <option value="2">Keramik</option>
+                        <option value="3">Tegel/Teraso</option>
+                        <option value="4">Kayu/Papan</option>
+                        <option value="5">Semen/Bata</option>
+                        <option value="6">Tanah</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jenisDinding" class="required">Jenis Dinding</label>
+                    <select id="jenisDinding" name="jenisDinding" required>
+                        <option value="">Pilih Jenis Dinding</option>
+                        <option value="1">Tembok</option>
+                        <option value="2">Kayu</option>
+                        <option value="3">Bambu</option>
+                        <option value="4">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fasilitasWC" class="required">Fasilitas Buang Air Besar</label>
+                    <select id="fasilitasWC" name="fasilitasWC" required>
+                        <option value="">Pilih Fasilitas</option>
+                        <option value="1">WC Sendiri</option>
+                        <option value="2">WC Bersama</option>
+                        <option value="3">Tidak Ada</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sumberAir" class="required">Sumber Air Minum</label>
+                    <select id="sumberAir" name="sumberAir" required>
+                        <option value="">Pilih Sumber Air</option>
+                        <option value="1">Air Kemasan</option>
+                        <option value="2">Ledeng/PAM</option>
+                        <option value="3">Sumur Bor</option>
+                        <option value="4">Sumur Terlindung</option>
+                        <option value="5">Mata Air</option>
+                        <option value="6">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="showSection(2)"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                    <button type="button" class="btn btn-next" onclick="showSection(4)">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Section 4: Data Kesehatan dan Lainnya -->
+            <div class="form-section" id="section4">
+                <h2 class="section-title"><i class="fas fa-heart-pulse"></i> Data Kesehatan dan Lainnya</h2>
+                
+                <div class="form-group">
+                    <label for="dayaListrik" class="required">Daya Listrik (Watt)</label>
+                    <input type="number" id="dayaListrik" name="dayaListrik" min="0" required placeholder="Contoh: 900">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bahanBakar" class="required">Bahan Bakar untuk Memasak</label>
+                    <select id="bahanBakar" name="bahanBakar" required>
+                        <option value="">Pilih Bahan Bakar</option>
+                        <option value="1">Listrik</option>
+                        <option value="2">Gas</option>
+                        <option value="3">Minyak Tanah</option>
+                        <option value="4">Kayu Bakar</option>
+                        <option value="5">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="kendaraan" class="required">Kepemilikan Kendaraan</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" name="kendaraan" value="mobil"> Mobil
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" name="kendaraan" value="motor"> Motor
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" name="kendaraan" value="sepeda"> Sepeda
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" name="kendaraan" value="none"> Tidak Ada
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="layananKesehatan" class="required">Jarak ke Fasilitas Kesehatan Terdekat (km)</label>
+                    <input type="number" id="layananKesehatan" name="layananKesehatan" min="0" step="0.1" required placeholder="Contoh: 2.5">
+                </div>
+                
+                <div class="form-group">
+                    <label for="layananPendidikan" class="required">Jarak ke Fasilitas Pendidikan Terdekat (km)</label>
+                    <input type="number" id="layananPendidikan" name="layananPendidikan" min="0" step="0.1" required placeholder="Contoh: 1.2">
+                </div>
+                
+                <div class="form-group">
+                    <label for="aksesTransportasi" class="required">Akses ke Jalan Beraspal</label>
+                    <select id="aksesTransportasi" name="aksesTransportasi" required>
+                        <option value="">Pilih Akses</option>
+                        <option value="1">Ya</option>
+                        <option value="0">Tidak</option>
+                    </select>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-prev" onclick="showSection(3)"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                    <button type="button" class="btn btn-submit" onclick="calculateIndex()"><i class="fas fa-calculator"></i> Hitung Indeks</button>
+                </div>
+            </div>
+        </form>
+        
+        <!-- Result Section -->
+        <div class="result-container" id="resultSection">
+            <h2 class="result-header">Hasil Perhitungan Indeks PRODESKEL</h2>
+            
+            <div class="index-result">
+                <div class="index-value" id="indexValue">0</div>
+                <div class="index-label">Indeks Kesejahteraan Keluarga</div>
+            </div>
+            
+            <div class="index-detail">
+                <div class="index-category">
+                    <div class="category-title">Status Ekonomi</div>
+                    <div class="category-value" id="economicStatus">Rendah</div>
+                </div>
+                <div class="index-category">
+                    <div class="category-title">Status Sosial</div>
+                    <div class="category-value" id="socialStatus">Rendah</div>
+                </div>
+                <div class="index-category">
+                    <div class="category-title">Status Perumahan</div>
+                    <div class="category-value" id="housingStatus">Rendah</div>
+                </div>
+                <div class="index-category">
+                    <div class="category-title">Status Kesehatan</div>
+                    <div class="category-value" id="healthStatus">Rendah</div>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="button" class="btn btn-prev" onclick="showSection(4)"><i class="fas fa-edit"></i> Edit Data</button>
+                <button type="button" class="btn btn-submit" onclick="submitForm()"><i class="fas fa-paper-plane"></i> Kirim Data</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Helpdesk PRODESKEL Desa Kebonrejo. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Show specific section
+        function showSection(sectionNumber) {
+            // Hide all sections
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`section${i}`).classList.remove('active');
+            }
+            
+            // Show the selected section
+            document.getElementById(`section${sectionNumber}`).classList.add('active');
+            
+            // Update progress
+            updateProgress(sectionNumber);
+            
+            // Scroll to top of form
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Update progress bar
+        function updateProgress(currentSection) {
+            const progress = (currentSection / 4) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${progress}%`;
+        }
+        
+        // Get GPS location
+        document.getElementById('getLocation').addEventListener('click', function() {
+            const status = document.getElementById('gpsStatus');
+            
+            status.textContent = "Mendeteksi lokasi...";
+            status.style.color = var(--primary);
+            
+            if (!navigator.geolocation) {
+                status.textContent = "Geolocation tidak didukung browser ini";
+                status.style.color = var(--danger);
+                return;
+            }
+            
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    document.getElementById('latitude').value = lat.toFixed(6);
+                    document.getElementById('longitude').value = lng.toFixed(6);
+                    
+                    status.textContent = "Lokasi berhasil diambil";
+                    status.style.color = var(--secondary);
+                },
+                function(error) {
+                    let errorMessage;
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = "Pengambilan lokasi ditolak";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = "Informasi lokasi tidak tersedia";
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = "Permintaan lokasi timeout";
+                            break;
+                        default:
+                            errorMessage = "Error tidak diketahui";
+                    }
+                    status.textContent = errorMessage;
+                    status.style.color = var(--danger);
+                }
+            );
+        });
+        
+        // Calculate index based on form data
+        function calculateIndex() {
+            // In a real application, this would be a more complex calculation
+            // based on the actual PRODESKEL formula from Kemendagri
+            
+            // Simple simulation of index calculation
+            const pendidikan = parseInt(document.getElementById('pendidikan').value) || 1;
+            const pekerjaan = parseInt(document.getElementById('pekerjaan').value) || 1;
+            const penghasilan = parseInt(document.getElementById('penghasilan').value) || 1;
+            const statusRumah = parseInt(document.getElementById('statusRumah').value) || 1;
+            const luasRumah = parseInt(document.getElementById('luasRumah').value) || 0;
+            const dayaListrik = parseInt(document.getElementById('dayaListrik').value) || 0;
+            
+            // Calculate a simple index (this is just a simulation)
+            let index = 50; // Base value
+            
+            // Add values based on form inputs
+            index += (pendidikan * 2);
+            index += (pekerjaan * 1.5);
+            index += (penghasilan * 3);
+            index += (statusRumah * 2);
+            index += (Math.min(luasRumah, 100) / 10);
+            index += (Math.min(dayaListrik, 2200) / 100);
+            
+            // Cap the index at 100
+            index = Math.min(index, 100);
+            
+            // Display the result
+            document.getElementById('indexValue').textContent = index.toFixed(1);
+            
+            // Determine status based on index
+            const economicStatus = index > 75 ? "Tinggi" : index > 50 ? "Menengah" : "Rendah";
+            const socialStatus = index > 70 ? "Tinggi" : index > 45 ? "Menengah" : "Rendah";
+            const housingStatus = index > 80 ? "Tinggi" : index > 55 ? "Menengah" : "Rendah";
+            const healthStatus = index > 65 ? "Tinggi" : index > 40 ? "Menengah" : "Rendah";
+            
+            document.getElementById('economicStatus').textContent = economicStatus;
+            document.getElementById('socialStatus').textContent = socialStatus;
+            document.getElementById('housingStatus').textContent = housingStatus;
+            document.getElementById('healthStatus').textContent = healthStatus;
+            
+            // Show result section
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // Scroll to result
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Submit form data
+        function submitForm() {
+            alert('Data berhasil dikirim! Dalam implementasi nyata, data akan dikirim ke server.');
+            // Here you would typically send the data to a server
+        }
+        
+        // Initialize the form
+        updateProgress(1);
+    </script>
+</body>
+</html>
