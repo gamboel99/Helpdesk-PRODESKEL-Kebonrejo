@@ -546,16 +546,16 @@
         "score": 1
       },
       {
+        "label": "—",
+        "score": 2
+      },
+      {
         "label": "Mayoritas normal",
         "score": 3
       },
       {
         "label": "Semua normal",
         "score": 4
-      },
-      {
-        "label": "—",
-        "score": 2
       }
     ]
   },

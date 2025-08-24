@@ -1,4 +1,4 @@
-// Prodeskel Lite – App JS
+// Prodeskel Lite v2 – Kebonrejo
 const LS_DATA = 'prodeskel_data_v2';
 const LS_CFG  = 'prodeskel_cfg_v2';
 
@@ -12,9 +12,17 @@ let data = loadData(); // array of records
 let INDICATORS = [];   // loaded from data/indicators.json
 
 // ===== Load indicators =====
-fetch('data/indicators.json').then(r=>r.json()).then(json=>{
+fetch('data/indicators.json').then(r=>{
+  if(!r.ok) throw new Error('Gagal memuat indicators.json');
+  return r.json();
+}).then(json=>{
   INDICATORS = json;
   renderIndicatorControls();
+  applyURLPrefill();      // NEW: prefill from URL
+  renderAll();
+}).catch(err=>{
+  document.getElementById('dynamicIndicators').innerHTML = `<div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700">Tidak bisa memuat daftar indikator. Pastikan folder <code>/data/indicators.json</code> tersedia di hosting.</div>`;
+  console.error(err);
   renderAll();
 });
 
@@ -22,7 +30,7 @@ function loadConfig(){ try { return JSON.parse(localStorage.getItem(LS_CFG)) || 
 function saveConfig(){ localStorage.setItem(LS_CFG, JSON.stringify(config)); syncConfigUI(); renderAll(); }
 
 function loadData(){ try { return JSON.parse(localStorage.getItem(LS_DATA)) || []; } catch(e){ return []; } }
-function saveData(){ localStorage.setItem(LS_DATA, JSON.stringify(data)); renderAll(); }
+function persistData(){ localStorage.setItem(LS_DATA, JSON.stringify(data)); renderAll(); }
 
 function clamp(n, min, max){ return Math.max(min, Math.min(max, Number(n||0))); }
 
@@ -121,10 +129,49 @@ function renderIndicatorControls(){
   });
 }
 
+// ===== URL Prefill =====
+function applyURLPrefill(){
+  const params = new URLSearchParams(window.location.search);
+  const form = document.getElementById('formKK');
+  const fields = ['dusun','rw','rt','kk','nama'];
+  let any = false;
+  fields.forEach(k=>{
+    const v = params.get(k);
+    if(v){ form[k].value = v; any = true; }
+  });
+  if(params.has('editIndex')) form.editIndex.value = params.get('editIndex')||'';
+  if(any){
+    document.getElementById('prefillHint').textContent = 'Form terisi otomatis dari URL. Silakan lengkapi indikator di bawah ini lalu Simpan.';
+    // pastikan tab input aktif
+    tabs.forEach(b => b.classList.remove('bg-indigo-600','text-white')); 
+    tabs[0].classList.add('bg-indigo-600','text-white');
+    Object.values(panels).forEach(p => p.classList.add('hidden'));
+    panels.input.classList.remove('hidden');
+  }
+}
+
 // ===== Form handling =====
 const form = document.getElementById('formKK');
 const btnResetForm = document.getElementById('btnResetForm');
-form.addEventListener('submit', (e)=>{
+
+function attachGPS(rec){
+  return new Promise(resolve=>{
+    if(!navigator.geolocation){ rec.latitude=null; rec.longitude=null; return resolve(rec); }
+    const opts = { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 };
+    navigator.geolocation.getCurrentPosition(pos=>{
+      rec.latitude = pos.coords.latitude;
+      rec.longitude = pos.coords.longitude;
+      // tampilkan ke input readonly
+      if(form.latitude) form.latitude.value = rec.latitude ?? '';
+      if(form.longitude) form.longitude.value = rec.longitude ?? '';
+      resolve(rec);
+    }, _err=>{
+      rec.latitude = null; rec.longitude = null; resolve(rec);
+    }, opts);
+  });
+}
+
+form.addEventListener('submit', async (e)=>{
   e.preventDefault();
   const fd = new FormData(form);
   const rec = Object.fromEntries(fd.entries());
@@ -135,13 +182,16 @@ form.addEventListener('submit', (e)=>{
     delete rec[key];
   });
   rec.ind = ind;
+  // GPS attach before compute+save
+  await attachGPS(rec);
   rec.score = computeTotalScore(rec);
   rec.klas = classify(rec.score);
   const idx = rec.editIndex !== '' ? Number(rec.editIndex) : -1;
   delete rec.editIndex;
   if(idx>=0 && data[idx]) data[idx] = rec; else data.push(rec);
-  saveData();
+  persistData();
   form.reset();
+  if(form.latitude) form.latitude.value=''; if(form.longitude) form.longitude.value='';
 });
 
 btnResetForm.addEventListener('click', ()=> form.reset());
@@ -153,6 +203,8 @@ function editRow(i){
   form.rt.value = r.rt||'';
   form.kk.value = r.kk||'';
   form.nama.value = r.nama||'';
+  form.latitude.value = r.latitude ?? '';
+  form.longitude.value = r.longitude ?? '';
   // indicators
   INDICATORS.forEach(x=>{
     const el = document.getElementById(`ind_${x.id}`);
@@ -161,10 +213,10 @@ function editRow(i){
   form.editIndex.value = i;
   window.scrollTo({top:0, behavior:'smooth'});
 }
-function deleteRow(i){ if(confirm('Hapus data ini?')){ data.splice(i,1); saveData(); } }
+function deleteRow(i){ if(confirm('Hapus data ini?')){ data.splice(i,1); persistData(); } }
 
 document.getElementById('btnHapusSemua').addEventListener('click', ()=>{
-  if(confirm('Hapus semua data KK?')){ data = []; saveData(); }
+  if(confirm('Hapus semua data KK?')){ data = []; persistData(); }
 });
 
 // ===== Search =====
@@ -174,20 +226,23 @@ search.addEventListener('input', renderTable);
 // ===== Sample =====
 document.getElementById('btnSample').addEventListener('click', ()=>{
   const sample = [
-    { dusun:'Krajan', rw:'01', rt:'01', kk:'3517-001', nama:'Slamet' },
+    { dusun:'Keling', rw:'02', rt:'07', kk:'3517-001', nama:'Eko Wahyudi Antoro' },
     { dusun:'Krajan', rw:'01', rt:'02', kk:'3517-002', nama:'Siti' },
     { dusun:'Krajan', rw:'02', rt:'01', kk:'3517-003', nama:'Budi' },
     { dusun:'Gedangan', rw:'01', rt:'01', kk:'3517-004', nama:'Wati' }
   ];
-  // set default indicator values to first option
+  // default indicator values to last (optimistic)
   sample.forEach(r=>{
     r.ind = {};
-    INDICATORS.forEach(ind=> r.ind[ind.id] = ind.options[ind.options.length-1].label); // optimistic
+    INDICATORS.forEach(ind=> r.ind[ind.id] = ind.options[ind.options.length-1].label);
+  });
+  sample.forEach(r=>{
     r.score = computeTotalScore(r);
     r.klas = classify(r.score);
+    r.latitude = null; r.longitude = null;
   });
   data = data.concat(sample);
-  saveData();
+  persistData();
 });
 
 // ===== Render =====
@@ -213,6 +268,7 @@ function renderTable(){
     return hay.includes(q);
   }).forEach(r=>{
     const tr = document.createElement('tr');
+    const coord = (r.latitude!=null && r.longitude!=null) ? `${r.latitude.toFixed ? r.latitude.toFixed(5) : r.latitude}, ${r.longitude.toFixed ? r.longitude.toFixed(5) : r.longitude}` : '—';
     tr.innerHTML = `
       <td class="p-2">${r.dusun||''}</td>
       <td class="p-2">${r.rw||''}</td>
@@ -221,6 +277,7 @@ function renderTable(){
       <td class="p-2">${r.nama||''}</td>
       <td class="p-2 text-right">${r.score?.toFixed?.(1) ?? r.score}</td>
       <td class="p-2">${r.klas||''}</td>
+      <td class="p-2">${coord}</td>
       <td class="p-2">
         <button class="text-indigo-600 underline mr-2" onclick="editRow(${r.i})">Edit</button>
         <button class="text-rose-600 underline" onclick="deleteRow(${r.i})">Hapus</button>
@@ -342,7 +399,7 @@ document.getElementById('btnResetConfig').addEventListener('click', ()=>{
 });
 
 // ===== Import/Export JSON =====
-document.getElementById('btnExportJson').addEventListener('click', ()=>{
+document.getElementById('btnExportJson')?.addEventListener('click', ()=>{
   const blob = new Blob([JSON.stringify({config, data}, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -350,7 +407,7 @@ document.getElementById('btnExportJson').addEventListener('click', ()=>{
   URL.revokeObjectURL(url);
 });
 
-document.getElementById('importJson').addEventListener('change', (e)=>{
+document.getElementById('importJson')?.addEventListener('change', (e)=>{
   const file = e.target.files?.[0]; if(!file) return;
   const reader = new FileReader();
   reader.onload = () => {
@@ -358,7 +415,7 @@ document.getElementById('importJson').addEventListener('change', (e)=>{
       const obj = JSON.parse(reader.result);
       if(obj.config) config = obj.config;
       if(obj.data) data = obj.data;
-      saveConfig(); saveData();
+      saveConfig(); persistData();
       alert('Import selesai.');
     } catch(err){ alert('File tidak valid.'); }
   };
@@ -371,17 +428,21 @@ document.getElementById('btnExportExcel').addEventListener('click', ()=>{
 
   // Data_KK
   const rows = data.map(r=>{
-    const base = { Dusun: r.dusun, RW: r.rw, RT: r.rt, KK: r.kk, Kepala_Keluarga: r.nama, Skor: r.score, Klasifikasi: r.klas };
-    // flatten indicators
-    INDICATORS.forEach(ind=>{
-      base[`IND_${ind.id}`] = r.ind?.[ind.id] ?? '';
-    });
+    const base = { Dusun: r.dusun, RW: r.rw, RT: r.rt, KK: r.kk, Kepala_Keluarga: r.nama, Latitude: r.latitude, Longitude: r.longitude, Skor: r.score, Klasifikasi: r.klas };
+    INDICATORS.forEach(ind=>{ base[`IND_${ind.id}`] = r.ind?.[ind.id] ?? ''; });
     return base;
   });
   const ws1 = XLSX.utils.json_to_sheet(rows);
   XLSX.utils.book_append_sheet(wb, ws1, 'Data_KK');
 
-  // Rekap helpers
+  function avgScore(arr){ if(arr.length===0) return 0; return Math.round((arr.reduce((a,b)=>a+Number(b.score||0),0)/arr.length)*10)/10; }
+  function classify(score){
+    const { low, mid, high } = config.thresholds;
+    if(score >= high) return 'Mandiri';
+    if(score >= mid) return 'Maju';
+    if(score > low) return 'Berkembang';
+    return 'Tertinggal';
+  }
   function rekapSheet(groupKeys, title){
     const g = {};
     data.forEach(r=>{
@@ -406,7 +467,6 @@ document.getElementById('btnExportExcel').addEventListener('click', ()=>{
   rekapSheet(['dusun','rw'], 'Rekap_RW');
   rekapSheet(['dusun','rw','rt'], 'Rekap_RT');
 
-  // Rekap Desa (single row)
   const desa = [{ Rata_Skor: avgScore(data), Klasifikasi: classify(avgScore(data)), Jumlah_KK: data.length }];
   const ws4 = XLSX.utils.json_to_sheet(desa);
   XLSX.utils.book_append_sheet(wb, ws4, 'Rekap_Desa');

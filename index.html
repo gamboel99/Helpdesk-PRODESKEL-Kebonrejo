@@ -3,36 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prodeskel Lite – Skoring Hirarkis (Desa→Dusun→RW→RT→KK)</title>
+  <title>Prodeskel Lite – Desa Kebonrejo</title>
+  <meta name="description" content="Form Prodeskel (KK→RT→RW→Dusun→Desa), skoring otomatis, ekspor Excel. Desa Kebonrejo, Kec. Kepung, Kab. Kediri.">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
-  <meta name="description" content="Aplikasi ringan untuk input data KK, skoring indikator, dan rekap Excel untuk Prodeskel.">
   <style>
     .table-scroll{overflow:auto}
     input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
-  <header class="bg-indigo-700 text-white">
-    <div class="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-white/20 grid place-items-center font-bold">PD</div>
-        <h1 class="text-xl md:text-2xl font-semibold">Prodeskel Lite – Desa</h1>
-      </div>
-      <div class="flex items-center gap-2">
-        <button id="btnExportExcel" class="px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm flex items-center gap-2">
-          <i data-feather="download"></i><span>Ekspor Excel</span>
-        </button>
-        <label class="px-3 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white text-sm flex items-center gap-2 cursor-pointer">
-          <i data-feather="upload"></i><span>Impor JSON</span>
-          <input id="importJson" type="file" accept="application/json" class="hidden" />
-        </label>
-        <button id="btnExportJson" class="px-3 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white text-sm flex items-center gap-2">
-          <i data-feather="save"></i><span>Ekspor JSON</span>
-        </button>
-      </div>
-    </div>
+  <header class="bg-blue-700 text-white p-4 text-center rounded-b-2xl shadow-md">
+    <h1 class="text-2xl font-bold">Sistem Profil Desa (Prodeskel)</h1>
+    <p class="text-lg">Desa Kebonrejo, Kecamatan Kepung, Kabupaten Kediri</p>
   </header>
 
   <main class="max-w-7xl mx-auto px-4 py-6">
@@ -87,6 +71,16 @@
               <label class="text-sm">Nama Kepala Keluarga</label>
               <input name="nama" required class="w-full mt-1 px-3 py-2 rounded-xl border" placeholder="Nama Kepala Keluarga" />
             </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-sm">Latitude (otomatis)</label>
+                <input name="latitude" readonly class="w-full mt-1 px-3 py-2 rounded-xl border bg-slate-50" placeholder="—" />
+              </div>
+              <div>
+                <label class="text-sm">Longitude (otomatis)</label>
+                <input name="longitude" readonly class="w-full mt-1 px-3 py-2 rounded-xl border bg-slate-50" placeholder="—" />
+              </div>
+            </div>
             <hr class="my-3" />
             <div id="dynamicIndicators" class="space-y-3"></div>
             <div class="flex gap-2 pt-2">
@@ -95,6 +89,7 @@
             </div>
             <input type="hidden" name="editIndex" value="" />
           </form>
+          <div id="prefillHint" class="text-xs text-slate-500 mt-2"></div>
         </div>
 
         <div class="md:col-span-2 p-4 bg-white rounded-2xl shadow">
@@ -117,6 +112,7 @@
                   <th class="p-2 text-left">Kepala Keluarga</th>
                   <th class="p-2 text-right">Skor (0-100)</th>
                   <th class="p-2 text-left">Klasifikasi</th>
+                  <th class="p-2 text-left">Koordinat</th>
                   <th class="p-2 text-left">Aksi</th>
                 </tr>
               </thead>
@@ -222,16 +218,18 @@
           <li>Ekspor Excel menghasilkan beberapa sheet: Data_KK, Rekap_RT, Rekap_RW, Rekap_Dusun, Rekap_Desa.</li>
           <li>Data disimpan di LocalStorage. Gunakan Ekspor/Impor JSON untuk pindah perangkat.</li>
         </ol>
-        <p class="mt-2 text-slate-500">Catatan: Daftar indikator berada di <code>data/indicators.json</code> dan dapat disesuaikan agar selaras dengan ketentuan Prodeskel/Kemendagri yang berlaku di daerah Anda.</p>
+        <p class="mt-2 text-slate-500">Catatan: Daftar indikator berasal dari <code>data/indicators.json</code>. Anda bisa menggantinya agar selaras dengan ketentuan Prodeskel/Kemendagri terbaru.</p>
       </div>
     </section>
   </main>
 
-  <footer class="max-w-7xl mx-auto px-4 pb-10 text-xs text-slate-500">
-    © {year} – Prodeskel Lite. Sumber terbuka, disusun untuk mendukung operator desa.
+  <footer class="bg-blue-700 text-white p-4 text-center rounded-t-2xl shadow-md">
+    <p>&copy; <span id="year"></span> Pemerintah Desa Kebonrejo - Kec. Kepung, Kab. Kediri</p>
   </footer>
 
-  <script>document.querySelector('footer').innerHTML = document.querySelector('footer').innerHTML.replace('{year}', new Date().getFullYear());</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
   <script src="assets/app.js"></script>
 </body>
 </html>
