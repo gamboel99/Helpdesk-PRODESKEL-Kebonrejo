@@ -1,0 +1,23 @@
+body {
+  background-color: #121212;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  margin: 0; padding: 0;
+}
+header, footer {
+  background: #1e3a8a;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.tabcontent { display: none; }
+.tablink { margin: 2px; padding: 8px; background: #374151; color: #fff; border:none; border-radius: 4px;}

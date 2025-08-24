@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Prodeskel - Desa Kebonrejo</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="libs/leaflet.css"/>
+  <script src="libs/leaflet.js"></script>
+  <script src="app.js" defer></script>
+  <script src="map.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>📝 Form Prodeskel</h1>
+    <h2>Desa Kebonrejo, Kec. Kepung, Kab. Kediri</h2>
+  </header>
+
+  <main>
+    <form id="prodeskelForm">
+      <div class="tabs">
+        <button type="button" class="tablink" onclick="openTab(event, 'identitas')">Identitas</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'kependudukan')">Kependudukan</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'pendidikan')">Pendidikan</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'kesehatan')">Kesehatan</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'sosbud')">Sosial Budaya</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'ekonomi')">Ekonomi</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'sarpras')">Sarana Prasarana</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'keamanan')">Keamanan</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'kelembagaan')">Kelembagaan</button>
+        <button type="button" class="tablink" onclick="openTab(event, 'potensi')">Potensi Desa</button>
+      </div>
+
+      <div id="identitas" class="tabcontent">
+        <h3>Identitas</h3>
+        <label>Nama Kepala Keluarga</label><input type="text" name="nama_kk" required><br>
+        <label>No KK</label><input type="text" name="no_kk" required><br>
+        <label>Dusun</label><input type="text" name="dusun" required><br>
+        <label>RW</label><input type="text" name="rw" required><br>
+        <label>RT</label><input type="text" name="rt" required><br>
+      </div>
+
+      <div id="kependudukan" class="tabcontent">
+        <h3>Kependudukan</h3>
+        <label>Jumlah Anggota Keluarga</label><input type="number" name="anggota" min="1"><br>
+        <label>Kondisi Rumah</label>
+        <select name="rumah">
+          <option value="5">Layak</option>
+          <option value="3">Kurang Layak</option>
+          <option value="1">Tidak Layak</option>
+        </select><br>
+      </div>
+
+      <div id="pendidikan" class="tabcontent">
+        <h3>Pendidikan</h3>
+        <label>Tingkat Pendidikan Tertinggi KK</label>
+        <select name="pendidikan">
+          <option value="5">Perguruan Tinggi</option>
+          <option value="4">SMA/SMK</option>
+          <option value="3">SMP</option>
+          <option value="2">SD</option>
+          <option value="1">Tidak Sekolah</option>
+        </select><br>
+      </div>
+
+      <div id="kesehatan" class="tabcontent">
+        <h3>Kesehatan</h3>
+        <label>Akses Layanan Kesehatan</label>
+        <select name="kesehatan">
+          <option value="5">Mudah</option>
+          <option value="3">Sedang</option>
+          <option value="1">Sulit</option>
+        </select><br>
+      </div>
+
+      <div id="sosbud" class="tabcontent">
+        <h3>Sosial Budaya</h3>
+        <label>Kegiatan Gotong Royong</label>
+        <select name="gotong">
+          <option value="5">Aktif</option>
+          <option value="3">Kadang</option>
+          <option value="1">Tidak Ada</option>
+        </select><br>
+      </div>
+
+      <div id="map" style="height:300px;"></div>
+      <input type="hidden" name="lat" id="lat">
+      <input type="hidden" name="lng" id="lng">
+
+      <button type="submit">💾 Simpan</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>© 2025 Desa Kebonrejo | Prodeskel Kemendagri</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Prodeskel - Desa Kebonrejo</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="libs/xlsx.full.min.js"></script>
+  <script src="app.js" defer></script>
+  <script src="export.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>📊 Dashboard Prodeskel</h1>
+    <h2>Desa Kebonrejo, Kec. Kepung, Kab. Kediri</h2>
+  </header>
+
+  <main>
+    <section id="summary">
+      <h3>Ringkasan Skor Indeks</h3>
+      <div id="rekap"></div>
+      <button onclick="exportToExcel()">📥 Export Excel</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Desa Kebonrejo | Prodeskel Kemendagri</p>
+  </footer>
+</body>
+</html>
