@@ -1,0 +1,1066 @@
+[
+  {
+    "id": "penghasilan",
+    "label": "Penghasilan bulanan rumah tangga",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": "< Rp600 ribu",
+        "score": 0
+      },
+      {
+        "label": "Rp600 ribu – < Rp1,5 juta",
+        "score": 1
+      },
+      {
+        "label": "Rp1,5 – < Rp3 juta",
+        "score": 2
+      },
+      {
+        "label": "Rp3 – < Rp5 juta",
+        "score": 3
+      },
+      {
+        "label": ">= Rp5 juta",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "status_pekerjaan",
+    "label": "Status pekerjaan kepala keluarga",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak bekerja",
+        "score": 0
+      },
+      {
+        "label": "Pekerja tidak tetap",
+        "score": 1
+      },
+      {
+        "label": "Pekerja informal tetap",
+        "score": 2
+      },
+      {
+        "label": "Karyawan/pegawai",
+        "score": 3
+      },
+      {
+        "label": "Wirausaha mapan",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "kepemilikan_rumah",
+    "label": "Kepemilikan rumah",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Menumpang",
+        "score": 0
+      },
+      {
+        "label": "Kontrak/sewa",
+        "score": 1
+      },
+      {
+        "label": "Milik keluarga bersama",
+        "score": 2
+      },
+      {
+        "label": "Milik sendiri (KPR)",
+        "score": 3
+      },
+      {
+        "label": "Milik sendiri lunas",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "bahan_bakar",
+    "label": "Bahan bakar memasak utama",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Kayu/batu bara",
+        "score": 0
+      },
+      {
+        "label": "Minyak tanah",
+        "score": 1
+      },
+      {
+        "label": "LPG 3kg",
+        "score": 2
+      },
+      {
+        "label": "LPG 12kg/elpiji pipa",
+        "score": 3
+      },
+      {
+        "label": "Listrik/induksi",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "tabungan",
+    "label": "Memiliki tabungan/akses lembaga keuangan",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak",
+        "score": 0
+      },
+      {
+        "label": "Simpan di rumah",
+        "score": 1
+      },
+      {
+        "label": "Koperasi/Arisan",
+        "score": 2
+      },
+      {
+        "label": "Rekening bank aktif",
+        "score": 3
+      },
+      {
+        "label": "Rekening + produk keuangan (asuransi, investasi)",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "aset_produktif",
+    "label": "Aset produktif (alat, lahan usaha)",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada",
+        "score": 0
+      },
+      {
+        "label": "Sangat terbatas",
+        "score": 1
+      },
+      {
+        "label": "Terbatas",
+        "score": 2
+      },
+      {
+        "label": "Cukup",
+        "score": 3
+      },
+      {
+        "label": "Memadai/berlebih",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "ketahanan_pangan",
+    "label": "Ketahanan pangan 7 hari terakhir",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Sering kekurangan",
+        "score": 0
+      },
+      {
+        "label": "Kadang kekurangan",
+        "score": 1
+      },
+      {
+        "label": "Cukup pas",
+        "score": 2
+      },
+      {
+        "label": "Cukup baik",
+        "score": 3
+      },
+      {
+        "label": "Sangat baik",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "beban_tanggungan",
+    "label": "Rasio tanggungan (non-produktif/produktif)",
+    "dim": "ekonomi",
+    "type": "select",
+    "options": [
+      {
+        "label": ">= 2,0",
+        "score": 0
+      },
+      {
+        "label": "1,5 – < 2,0",
+        "score": 1
+      },
+      {
+        "label": "1,0 – < 1,5",
+        "score": 2
+      },
+      {
+        "label": "0,5 – < 1,0",
+        "score": 3
+      },
+      {
+        "label": "< 0,5",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "pend_kk",
+    "label": "Pendidikan tertinggi kepala keluarga",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak sekolah",
+        "score": 0
+      },
+      {
+        "label": "SD/sederajat",
+        "score": 1
+      },
+      {
+        "label": "SMP/sederajat",
+        "score": 2
+      },
+      {
+        "label": "SMA/sederajat",
+        "score": 3
+      },
+      {
+        "label": "Diploma/S1+",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "anaksd",
+    "label": "Seluruh anak usia SD bersekolah",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada anak usia SD",
+        "score": 4
+      },
+      {
+        "label": "< 50% bersekolah",
+        "score": 1
+      },
+      {
+        "label": "50–<80% bersekolah",
+        "score": 2
+      },
+      {
+        "label": ">=80% bersekolah",
+        "score": 3
+      },
+      {
+        "label": "100% bersekolah",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "anaksmp",
+    "label": "Seluruh anak usia SMP bersekolah",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada anak usia SMP",
+        "score": 4
+      },
+      {
+        "label": "< 50% bersekolah",
+        "score": 1
+      },
+      {
+        "label": "50–<80% bersekolah",
+        "score": 2
+      },
+      {
+        "label": ">=80% bersekolah",
+        "score": 3
+      },
+      {
+        "label": "100% bersekolah",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "literasi",
+    "label": "Kemampuan baca-tulis semua anggota 10+",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "<50%",
+        "score": 0
+      },
+      {
+        "label": "50–<70%",
+        "score": 1
+      },
+      {
+        "label": "70–<85%",
+        "score": 2
+      },
+      {
+        "label": "85–<100%",
+        "score": 3
+      },
+      {
+        "label": "100%",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "akses_internet",
+    "label": "Akses internet untuk belajar/kerja",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada",
+        "score": 0
+      },
+      {
+        "label": "Berbagi tetangga/fasilitas umum",
+        "score": 1
+      },
+      {
+        "label": "HP paket terbatas",
+        "score": 2
+      },
+      {
+        "label": "HP paket cukup",
+        "score": 3
+      },
+      {
+        "label": "Wifi rumah stabil",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "buku_bacaan",
+    "label": "Ketersediaan bahan bacaan/ruang belajar",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada",
+        "score": 0
+      },
+      {
+        "label": "Minim",
+        "score": 1
+      },
+      {
+        "label": "Cukup",
+        "score": 2
+      },
+      {
+        "label": "Baik",
+        "score": 3
+      },
+      {
+        "label": "Sangat baik",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "paud",
+    "label": "Anak usia PAUD mengikuti layanan PAUD",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada anak PAUD",
+        "score": 4
+      },
+      {
+        "label": "<50% ikut",
+        "score": 1
+      },
+      {
+        "label": "50–<80% ikut",
+        "score": 2
+      },
+      {
+        "label": ">=80% ikut",
+        "score": 3
+      },
+      {
+        "label": "100% ikut",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "putus_sekolah",
+    "label": "Ada anak putus sekolah 7–18 tahun",
+    "dim": "pendidikan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Ada ≥2 anak",
+        "score": 0
+      },
+      {
+        "label": "Ada 1 anak",
+        "score": 1
+      },
+      {
+        "label": "Pernah, kini remedial",
+        "score": 2
+      },
+      {
+        "label": "Tidak ada, rawan",
+        "score": 3
+      },
+      {
+        "label": "Tidak ada",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "bpjs",
+    "label": "Kepesertaan jaminan kesehatan (BPJS/JK)",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada",
+        "score": 0
+      },
+      {
+        "label": "Sebagian kecil",
+        "score": 1
+      },
+      {
+        "label": "Sebagian",
+        "score": 2
+      },
+      {
+        "label": "Sebagian besar",
+        "score": 3
+      },
+      {
+        "label": "Semua anggota",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "imunisasi",
+    "label": "Status imunisasi balita",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada balita",
+        "score": 4
+      },
+      {
+        "label": "<50% lengkap",
+        "score": 1
+      },
+      {
+        "label": "50–<80% lengkap",
+        "score": 2
+      },
+      {
+        "label": ">=80% lengkap",
+        "score": 3
+      },
+      {
+        "label": "100% lengkap",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "ibu_hamil",
+    "label": "Pemeriksaan kehamilan (ANC)",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada ibu hamil",
+        "score": 4
+      },
+      {
+        "label": "Tidak rutin",
+        "score": 1
+      },
+      {
+        "label": "Kurang dari standar",
+        "score": 2
+      },
+      {
+        "label": "Sesuai standar",
+        "score": 3
+      },
+      {
+        "label": "Sesuai + kelas ibu hamil",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "gizi",
+    "label": "Kondisi gizi balita",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Banyak gizi buruk/kurang",
+        "score": 0
+      },
+      {
+        "label": "Ada gizi kurang",
+        "score": 1
+      },
+      {
+        "label": "Mayoritas normal",
+        "score": 3
+      },
+      {
+        "label": "Semua normal",
+        "score": 4
+      },
+      {
+        "label": "—",
+        "score": 2
+      }
+    ]
+  },
+  {
+    "id": "penyakit_kronis",
+    "label": "Akses layanan bagi penyakit kronis",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak terakses",
+        "score": 0
+      },
+      {
+        "label": "Sporadis",
+        "score": 1
+      },
+      {
+        "label": "Cukup terakses",
+        "score": 2
+      },
+      {
+        "label": "Baik",
+        "score": 3
+      },
+      {
+        "label": "Sangat baik",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "posyandu",
+    "label": "Partisipasi posyandu/UKBM",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak pernah",
+        "score": 0
+      },
+      {
+        "label": "Kadang",
+        "score": 1
+      },
+      {
+        "label": "Cukup",
+        "score": 2
+      },
+      {
+        "label": "Rutin",
+        "score": 3
+      },
+      {
+        "label": "Rutin + kader aktif",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "air_minum",
+    "label": "Sumber air minum layak",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Permukaan/tercemar",
+        "score": 0
+      },
+      {
+        "label": "Sumur gali tak terlindung",
+        "score": 1
+      },
+      {
+        "label": "Sumur terlindung",
+        "score": 2
+      },
+      {
+        "label": "PAM/pipa desa",
+        "score": 3
+      },
+      {
+        "label": "PAM + filtrasi rumah",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "merokok",
+    "label": "Perokok di rumah",
+    "dim": "kesehatan",
+    "type": "select",
+    "options": [
+      {
+        "label": "Banyak di dalam rumah",
+        "score": 0
+      },
+      {
+        "label": "Ada di dalam rumah",
+        "score": 1
+      },
+      {
+        "label": "Hanya di luar rumah",
+        "score": 2
+      },
+      {
+        "label": "Jarang sekali",
+        "score": 3
+      },
+      {
+        "label": "Tidak ada",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "toilet",
+    "label": "Jenis jamban keluarga",
+    "dim": "sanitasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada/jamban cemplung",
+        "score": 0
+      },
+      {
+        "label": "Jamban sederhana",
+        "score": 1
+      },
+      {
+        "label": "Leher angsa tanpa septik",
+        "score": 2
+      },
+      {
+        "label": "Leher angsa + septik",
+        "score": 3
+      },
+      {
+        "label": "Septik aman/IPAL",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "sampah",
+    "label": "Pengelolaan sampah rumah tangga",
+    "dim": "sanitasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Dibuang sembarangan",
+        "score": 0
+      },
+      {
+        "label": "Dibakar/dibuang ke sungai",
+        "score": 1
+      },
+      {
+        "label": "Dikumpulkan seadanya",
+        "score": 2
+      },
+      {
+        "label": "TPS/Bank sampah",
+        "score": 3
+      },
+      {
+        "label": "3R terpilah + layanan rutin",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "drainase",
+    "label": "Kondisi drainase lingkungan",
+    "dim": "sanitasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Sering banjir/tersumbat",
+        "score": 0
+      },
+      {
+        "label": "Kadang tergenang",
+        "score": 1
+      },
+      {
+        "label": "Cukup lancar",
+        "score": 2
+      },
+      {
+        "label": "Lancar & terpelihara",
+        "score": 3
+      },
+      {
+        "label": "Lancar + biopori/rumput",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "hunian_padat",
+    "label": "Kepadatan hunian/ventilasi",
+    "dim": "sanitasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Sangat padat/buruk",
+        "score": 0
+      },
+      {
+        "label": "Padat",
+        "score": 1
+      },
+      {
+        "label": "Sedang",
+        "score": 2
+      },
+      {
+        "label": "Longgar",
+        "score": 3
+      },
+      {
+        "label": "Sehat (ventilasi baik)",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "energi_listrik",
+    "label": "Akses listrik",
+    "dim": "sanitasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada",
+        "score": 0
+      },
+      {
+        "label": "Sambung tetangga",
+        "score": 1
+      },
+      {
+        "label": "450–900 VA tidak stabil",
+        "score": 2
+      },
+      {
+        "label": ">=1300 VA stabil",
+        "score": 3
+      },
+      {
+        "label": ">=2200 VA + cadangan",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "bencana",
+    "label": "Kerentanan bencana (banjir/longsor)",
+    "dim": "sanitasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Sering terdampak",
+        "score": 0
+      },
+      {
+        "label": "Kadang terdampak",
+        "score": 1
+      },
+      {
+        "label": "Risiko sedang",
+        "score": 2
+      },
+      {
+        "label": "Risiko rendah",
+        "score": 3
+      },
+      {
+        "label": "Mitigasi baik (rencana RT)",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "hewan",
+    "label": "Kebersihan hewan ternak/peliharaan",
+    "dim": "sanitasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Kotor di dalam rumah",
+        "score": 0
+      },
+      {
+        "label": "Sering mengganggu",
+        "score": 1
+      },
+      {
+        "label": "Terkontrol",
+        "score": 2
+      },
+      {
+        "label": "Kandang terkelola",
+        "score": 3
+      },
+      {
+        "label": "Kandang + sanitasi rutin",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "gotong_royong",
+    "label": "Gotong royong lingkungan",
+    "dim": "partisipasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak berjalan",
+        "score": 0
+      },
+      {
+        "label": "Jarang",
+        "score": 1
+      },
+      {
+        "label": "Cukup",
+        "score": 2
+      },
+      {
+        "label": "Rutin",
+        "score": 3
+      },
+      {
+        "label": "Rutin + inisiatif warga",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "karang_taruna",
+    "label": "Keikutsertaan Karang Taruna/pemuda",
+    "dim": "partisipasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak ada",
+        "score": 0
+      },
+      {
+        "label": "Pasif",
+        "score": 1
+      },
+      {
+        "label": "Cukup aktif",
+        "score": 2
+      },
+      {
+        "label": "Aktif",
+        "score": 3
+      },
+      {
+        "label": "Sangat aktif",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "pkk",
+    "label": "Keterlibatan PKK/keluarga",
+    "dim": "partisipasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak terlibat",
+        "score": 0
+      },
+      {
+        "label": "Jarang",
+        "score": 1
+      },
+      {
+        "label": "Cukup",
+        "score": 2
+      },
+      {
+        "label": "Aktif",
+        "score": 3
+      },
+      {
+        "label": "Sangat aktif",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "rt_rw",
+    "label": "Kepatuhan administrasi RT/RW (KK, KTP, Akta)",
+    "dim": "partisipasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Banyak tidak tertib",
+        "score": 0
+      },
+      {
+        "label": "Kurang tertib",
+        "score": 1
+      },
+      {
+        "label": "Cukup tertib",
+        "score": 2
+      },
+      {
+        "label": "Tertib",
+        "score": 3
+      },
+      {
+        "label": "Sangat tertib",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "keamanan",
+    "label": "Keamanan & siskamling",
+    "dim": "partisipasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Rawan konflik/kriminal",
+        "score": 0
+      },
+      {
+        "label": "Kadang kejadian",
+        "score": 1
+      },
+      {
+        "label": "Relatif aman",
+        "score": 2
+      },
+      {
+        "label": "Aman + ronda",
+        "score": 3
+      },
+      {
+        "label": "Aman + sistem terstruktur",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "musyawarah",
+    "label": "Partisipasi musyawarah desa/RT",
+    "dim": "partisipasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "<20% hadir",
+        "score": 0
+      },
+      {
+        "label": "20–<40%",
+        "score": 1
+      },
+      {
+        "label": "40–<60%",
+        "score": 2
+      },
+      {
+        "label": "60–<80%",
+        "score": 3
+      },
+      {
+        "label": ">=80%",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "kelembagaan_bumdes",
+    "label": "Pemanfaatan layanan BUMDes/ekonomi lokal",
+    "dim": "partisipasi",
+    "type": "select",
+    "options": [
+      {
+        "label": "Tidak memanfaatkan",
+        "score": 0
+      },
+      {
+        "label": "Jarang",
+        "score": 1
+      },
+      {
+        "label": "Kadang",
+        "score": 2
+      },
+      {
+        "label": "Sering",
+        "score": 3
+      },
+      {
+        "label": "Aktif/anggota",
+        "score": 4
+      }
+    ]
+  }
+]
