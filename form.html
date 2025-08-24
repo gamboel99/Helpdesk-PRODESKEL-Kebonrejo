@@ -2,250 +2,304 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Form Prodeskel - Desa Kebonrejo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Leaflet Map -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <title>Formulir Prodeskel Desa Kebonrejo</title>
   <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
-      color: #333;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Navbar */
+    /* RESET */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: Arial, sans-serif; line-height:1.6; background:#f4f6f8; color:#333; }
+    
+    /* NAVBAR */
     header {
-      background: #0d6efd;
-      color: white;
-      padding: 15px 20px;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: bold;
+      background:#0056b3;
+      color:#fff;
+      padding:1rem;
+      text-align:center;
+      font-size:1.3rem;
+      font-weight:bold;
     }
 
-    /* Container */
+    /* CONTAINER */
     .container {
-      flex: 1;
-      padding: 20px;
-      max-width: 900px;
-      margin: 20px auto;
+      max-width:1200px;
+      margin:20px auto;
+      padding:20px;
     }
 
-    /* Card */
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    /* Tabs */
+    /* TABS */
     .tabs {
-      display: flex;
-      border-bottom: 2px solid #ddd;
-      margin-bottom: 15px;
+      display:flex;
+      flex-wrap:wrap;
+      border-bottom:2px solid #ddd;
     }
-    .tabs button {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      background: #f1f1f1;
-      cursor: pointer;
-      font-weight: bold;
+    .tab {
+      flex:1;
+      text-align:center;
+      padding:10px;
+      cursor:pointer;
+      background:#e9ecef;
+      border:1px solid #ddd;
     }
-    .tabs button.active {
-      background: #0d6efd;
-      color: white;
+    .tab.active {
+      background:#0056b3;
+      color:#fff;
+      border-bottom:2px solid #0056b3;
     }
 
-    /* Form section */
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    /* FORM CARD */
+    .form-section {
+      display:none;
+      background:#fff;
+      padding:20px;
+      margin-top:10px;
+      border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .form-section.active { display:block; }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom:15px;
     }
-    label { font-weight: bold; display: block; margin-bottom: 5px; }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+    label {
+      font-weight:bold;
+      display:block;
+      margin-bottom:5px;
+    }
+    input, select, textarea {
+      width:100%;
+      padding:10px;
+      border:1px solid #ccc;
+      border-radius:5px;
+      font-size:1rem;
     }
 
-    /* Navigation buttons */
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
+    /* BUTTONS */
+    .btns {
+      display:flex;
+      justify-content:space-between;
+      margin-top:20px;
     }
     .btn {
-      background: #0d6efd;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
+      padding:10px 20px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
+      font-size:1rem;
     }
-    .btn:disabled { background: #999; cursor: not-allowed; }
+    .btn.prev { background:#6c757d; color:#fff; }
+    .btn.next { background:#0056b3; color:#fff; }
+    .btn.save { background:#28a745; color:#fff; flex:1; margin-left:10px; }
 
-    /* Map */
-    #map { height: 250px; margin-top: 15px; border-radius: 10px; }
-
-    /* Footer */
+    /* FOOTER */
     footer {
-      background: #0d6efd;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      font-size: 0.9rem;
+      text-align:center;
+      padding:15px;
+      background:#0056b3;
+      color:#fff;
+      margin-top:30px;
     }
 
-    /* Dark mode */
-    body.dark {
-      background: #181a1b;
-      color: #eee;
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .tabs { flex-direction:column; }
+      .btns { flex-direction:column; }
+      .btn { margin-bottom:10px; width:100%; }
+      .btn.save { margin-left:0; }
     }
-    body.dark .card { background: #242526; color: #eee; }
-    body.dark header, body.dark footer { background: #111; }
   </style>
 </head>
 <body>
-  <header>📊 Form Prodeskel - Desa Kebonrejo</header>
 
-  <div class="container">
-    <div class="card">
-      <!-- Tabs -->
-      <div class="tabs">
-        <button class="tab-btn active" onclick="showTab(0)">Identitas</button>
-        <button class="tab-btn" onclick="showTab(1)">Sosial</button>
-        <button class="tab-btn" onclick="showTab(2)">Ekonomi</button>
-      </div>
+<header>
+  Formulir Prodeskel - Desa Kebonrejo, Kec. Kepung, Kab. Kediri
+</header>
 
-      <!-- Tab 1 -->
-      <div class="tab-content active">
-        <div class="form-group">
-          <label>Nama Kepala Keluarga</label>
-          <input type="text" id="nama" required>
-        </div>
-        <div class="form-group">
-          <label>No KK</label>
-          <input type="text" id="kk" required>
-        </div>
-        <div class="form-group">
-          <label>Dusun</label>
-          <input type="text" id="dusun">
-        </div>
-        <div class="form-group">
-          <label>RW</label>
-          <input type="text" id="rw">
-        </div>
-        <div class="form-group">
-          <label>RT</label>
-          <input type="text" id="rt">
-        </div>
-        <div class="form-group">
-          <button class="btn" onclick="getLocation()">📍 Ambil Lokasi</button>
-          <div id="map"></div>
-        </div>
-      </div>
+<div class="container">
 
-      <!-- Tab 2 -->
-      <div class="tab-content">
-        <div class="form-group">
-          <label>Akses Air Bersih</label>
-          <select id="air">
-            <option value="5">Layak (5)</option>
-            <option value="3">Tidak Layak (3)</option>
-            <option value="1">Tidak Ada (1)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Sarana Kesehatan</label>
-          <select id="kesehatan">
-            <option value="5">Lengkap (5)</option>
-            <option value="3">Cukup (3)</option>
-            <option value="1">Tidak Ada (1)</option>
-          </select>
-        </div>
-      </div>
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" data-tab="profil">Profil Desa</div>
+    <div class="tab" data-tab="ddk">Kependudukan</div>
+    <div class="tab" data-tab="potensi">Potensi</div>
+    <div class="tab" data-tab="keuangan">Keuangan</div>
+    <div class="tab" data-tab="kelembagaan">Kelembagaan</div>
+    <div class="tab" data-tab="trantib">Trantib & Bencana</div>
+  </div>
 
-      <!-- Tab 3 -->
-      <div class="tab-content">
-        <div class="form-group">
-          <label>Mata Pencaharian Utama</label>
-          <select id="pekerjaan">
-            <option value="5">Tetap (5)</option>
-            <option value="3">Tidak Tetap (3)</option>
-            <option value="1">Tidak Ada (1)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Pendapatan Bulanan</label>
-          <select id="pendapatan">
-            <option value="5">> Rp 5 jt</option>
-            <option value="3">Rp 1–5 jt</option>
-            <option value="1">< Rp 1 jt</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Navigation -->
-      <div class="nav-buttons">
-        <button class="btn" id="prevBtn" onclick="nextPrev(-1)" disabled>Sebelumnya</button>
-        <button class="btn" id="nextBtn" onclick="nextPrev(1)">Selanjutnya</button>
-      </div>
+  <!-- Profil Desa -->
+  <div class="form-section active" id="profil">
+    <h2>Profil Desa/Kelurahan</h2>
+    <div class="form-group">
+      <label>Nama Desa</label>
+      <input type="text" placeholder="Desa Kebonrejo">
+    </div>
+    <div class="form-group">
+      <label>Visi</label>
+      <textarea rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Misi</label>
+      <textarea rows="3"></textarea>
+    </div>
+    <div class="btns">
+      <button class="btn next">Selanjutnya</button>
     </div>
   </div>
 
-  <footer>© 2025 Desa Kebonrejo, Kec. Kepung, Kab. Kediri</footer>
+  <!-- Kependudukan -->
+  <div class="form-section" id="ddk">
+    <h2>Data Kependudukan (DDK)</h2>
+    <div class="form-group">
+      <label>Jumlah KK</label>
+      <input type="number">
+    </div>
+    <div class="form-group">
+      <label>Jumlah Penduduk</label>
+      <input type="number">
+    </div>
+    <div class="form-group">
+      <label>Kelahiran Tahun Ini</label>
+      <input type="number">
+    </div>
+    <div class="btns">
+      <button class="btn prev">Sebelumnya</button>
+      <button class="btn next">Selanjutnya</button>
+    </div>
+  </div>
 
-  <script>
-    let currentTab = 0;
-    function showTab(n) {
-      document.querySelectorAll(".tab-btn").forEach((btn,i)=>{
-        btn.classList.toggle("active", i===n);
-      });
-      document.querySelectorAll(".tab-content").forEach((tab,i)=>{
-        tab.classList.toggle("active", i===n);
-      });
-      currentTab = n;
-      document.getElementById("prevBtn").disabled = n===0;
-      document.getElementById("nextBtn").innerText = n===2 ? "Simpan" : "Selanjutnya";
-    }
-    function nextPrev(n) {
-      let newTab = currentTab + n;
-      if(newTab < 0 || newTab > 2) return;
-      if(newTab===3){ alert("Data tersimpan!"); return; }
-      showTab(newTab);
-    }
+  <!-- Potensi -->
+  <div class="form-section" id="potensi">
+    <h2>Potensi Desa</h2>
+    <div class="form-group">
+      <label>Jenis Lahan</label>
+      <select>
+        <option>Pertanian</option>
+        <option>Perkebunan</option>
+        <option>Peternakan</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Potensi SDA</label>
+      <textarea></textarea>
+    </div>
+    <div class="form-group">
+      <label>Potensi SDM</label>
+      <textarea></textarea>
+    </div>
+    <div class="btns">
+      <button class="btn prev">Sebelumnya</button>
+      <button class="btn next">Selanjutnya</button>
+    </div>
+  </div>
 
-    // Leaflet map
-    let map, marker;
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          let lat = pos.coords.latitude;
-          let lng = pos.coords.longitude;
-          if(!map){
-            map = L.map('map').setView([lat, lng], 15);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: '© OpenStreetMap'
-            }).addTo(map);
-          }
-          if(marker) map.removeLayer(marker);
-          marker = L.marker([lat,lng]).addTo(map).bindPopup("Lokasi Anda").openPopup();
-        });
-      } else {
-        alert("Browser tidak mendukung GPS");
+  <!-- Keuangan -->
+  <div class="form-section" id="keuangan">
+    <h2>Data Keuangan</h2>
+    <div class="form-group">
+      <label>APBDes Tahun Berjalan</label>
+      <input type="number">
+    </div>
+    <div class="form-group">
+      <label>Pendapatan Asli Desa</label>
+      <input type="number">
+    </div>
+    <div class="btns">
+      <button class="btn prev">Sebelumnya</button>
+      <button class="btn next">Selanjutnya</button>
+    </div>
+  </div>
+
+  <!-- Kelembagaan -->
+  <div class="form-section" id="kelembagaan">
+    <h2>Data Kelembagaan dan Pemberdayaan</h2>
+    <div class="form-group">
+      <label>Jumlah BUMDes</label>
+      <input type="number">
+    </div>
+    <div class="form-group">
+      <label>Kegiatan Pemberdayaan</label>
+      <textarea></textarea>
+    </div>
+    <div class="btns">
+      <button class="btn prev">Sebelumnya</button>
+      <button class="btn next">Selanjutnya</button>
+    </div>
+  </div>
+
+  <!-- Trantib & Bencana -->
+  <div class="form-section" id="trantib">
+    <h2>Trantib dan Bencana</h2>
+    <div class="form-group">
+      <label>Kejadian Bencana Tahun Ini</label>
+      <input type="number">
+    </div>
+    <div class="form-group">
+      <label>Tingkat Keamanan</label>
+      <select>
+        <option>Aman</option>
+        <option>Rawan</option>
+      </select>
+    </div>
+    <div class="btns">
+      <button class="btn prev">Sebelumnya</button>
+      <button class="btn save">Simpan Data</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2025 Desa Kebonrejo, Kec. Kepung, Kab. Kediri
+</footer>
+
+<script>
+  // Tab Navigation
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('.form-section');
+  const nextBtns = document.querySelectorAll('.btn.next');
+  const prevBtns = document.querySelectorAll('.btn.prev');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      sections.forEach(sec=>sec.classList.remove('active'));
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  nextBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const current = document.querySelector('.form-section.active');
+      let next = current.nextElementSibling;
+      while(next && !next.classList.contains('form-section')){
+        next = next.nextElementSibling;
       }
-    }
-  </script>
+      if(next){
+        current.classList.remove('active');
+        next.classList.add('active');
+        tabs.forEach(t=>t.classList.remove('active'));
+        document.querySelector(`.tab[data-tab="${next.id}"]`).classList.add('active');
+      }
+    });
+  });
+
+  prevBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const current = document.querySelector('.form-section.active');
+      let prev = current.previousElementSibling;
+      while(prev && !prev.classList.contains('form-section')){
+        prev = prev.previousElementSibling;
+      }
+      if(prev){
+        current.classList.remove('active');
+        prev.classList.add('active');
+        tabs.forEach(t=>t.classList.remove('active'));
+        document.querySelector(`.tab[data-tab="${prev.id}"]`).classList.add('active');
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
