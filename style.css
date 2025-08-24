@@ -1,8 +1,0 @@
-/* Dark modern styles, small utilities */
-.input{background:#0f1724;border:1px solid #1f2937;padding:10px;border-radius:8px;color:#e6eef8;width:100%}
-.field span{display:block;font-size:0.85rem;margin-bottom:6px;color:#cbd5e1}
-.tabbtn{background:#0b1220;padding:8px 12px;border-radius:8px;border:1px solid #111827;color:#cbd5e1;cursor:pointer}
-.tabbtn.active{background:linear-gradient(90deg,#1f2937,#111827);box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
-.tabpane{padding:8px 0}
-.btn{background:#2563eb;color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
-.hidden{display:none}
