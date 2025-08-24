@@ -1,98 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form Prodeskel - Desa Kebonrejo</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="libs/leaflet.css"/>
-  <script src="libs/leaflet.js"></script>
-  <script src="app.js" defer></script>
-  <script src="map.js" defer></script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Form Prodeskel - Desa Kebonrejo</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-  <header>
-    <h1>📝 Form Prodeskel</h1>
-    <h2>Desa Kebonrejo, Kec. Kepung, Kab. Kediri</h2>
-  </header>
+<body class="bg-gray-900 text-gray-100">
+<header class="bg-gradient-to-r from-blue-800 to-indigo-800 p-4 shadow">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">Sistem Profil Desa (Prodeskel)</h1>
+      <div class="text-sm opacity-80">Desa Kebonrejo — Kec. Kepung — Kab. Kediri</div>
+    </div>
+    <div>
+      <a href="index.html" class="text-sm bg-white/10 px-3 py-2 rounded">Dashboard</a>
+    </div>
+  </div>
+</header>
 
-  <main>
-    <form id="prodeskelForm">
-      <div class="tabs">
-        <button type="button" class="tablink" onclick="openTab(event, 'identitas')">Identitas</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'kependudukan')">Kependudukan</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'pendidikan')">Pendidikan</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'kesehatan')">Kesehatan</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'sosbud')">Sosial Budaya</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'ekonomi')">Ekonomi</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'sarpras')">Sarana Prasarana</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'keamanan')">Keamanan</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'kelembagaan')">Kelembagaan</button>
-        <button type="button" class="tablink" onclick="openTab(event, 'potensi')">Potensi Desa</button>
+<main class="max-w-6xl mx-auto p-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="col-span-2 bg-gray-800 p-4 rounded-lg shadow">
+      <form id="prodeskelForm" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input type="text" name="nama" id="nama" placeholder="Nama Kepala Keluarga" class="input" required/>
+          <input type="text" name="no_kk" id="no_kk" placeholder="No. KK" class="input" required/>
+          <input type="text" name="dusun" id="dusun" placeholder="Dusun" class="input" required/>
+          <div class="flex space-x-2">
+            <input type="text" name="rw" id="rw" placeholder="RW" class="input"/>
+            <input type="text" name="rt" id="rt" placeholder="RT" class="input"/>
+          </div>
+        </div>
+
+        <div class="tabs mt-2">
+          <nav class="flex space-x-2 overflow-x-auto pb-2">
+            <button type="button" class="tabbtn active" data-tab="tab-penduduk">Kependudukan</button>
+            <button type="button" class="tabbtn" data-tab="tab-pendidikan">Pendidikan</button>
+            <button type="button" class="tabbtn" data-tab="tab-kesehatan">Kesehatan</button>
+            <button type="button" class="tabbtn" data-tab="tab-ekonomi">Ekonomi</button>
+            <button type="button" class="tabbtn" data-tab="tab-sarpras">Sarpras</button>
+            <button type="button" class="tabbtn" data-tab="tab-kelembagaan">Kelembagaan</button>
+            <button type="button" class="tabbtn" data-tab="tab-potensi">Potensi</button>
+            <button type="button" class="tabbtn" data-tab="tab-keamanan">Keamanan</button>
+            <button type="button" class="tabbtn" data-tab="tab-sosbud">Sosial Budaya</button>
+          </nav>
+
+          <section id="tab-penduduk" class="tabpane">
+            <h3 class="text-lg font-semibold mb-2">Kependudukan (contoh)</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Jumlah Anggota Keluarga</span><input type="number" name="anggota" min="0" class="input"/></label>
+              <label class="field"><span>Status Kependudukan</span>
+                <select name="status_kependudukan" class="input">
+                  <option value="5">Lengkap tercatat</option>
+                  <option value="3">Sebagian tercatat</option>
+                  <option value="1">Tidak tercatat</option>
+                </select>
+              </label>
+              <label class="field"><span>NIK Kepala Keluarga</span><input type="text" name="nik" class="input"/></label>
+              <label class="field"><span>Pendidikan tertinggi (KK)</span>
+                <select name="pendidikan_kk" class="input">
+                  <option value="5">S1/D4+</option><option value="4">SMA</option><option value="3">SMP</option><option value="2">SD</option><option value="1">Tidak sekolah</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section id="tab-pendidikan" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Pendidikan (contoh)</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Akses Sekolah Dasar</span>
+                <select name="akses_sd" class="input"><option value="5">Mudah</option><option value="3">Sedang</option><option value="1">Sulit</option></select>
+              </label>
+              <label class="field"><span>Persentase anak bersekolah</span>
+                <select name="persen_anak_sd" class="input"><option value="5">>95%</option><option value="4">80-95%</option><option value="3">60-80%</option><option value="2">40-60%</option><option value="1"><40%</option></select>
+              </label>
+            </div>
+          </section>
+
+          <section id="tab-kesehatan" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Kesehatan (contoh)</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Akses fasilitas kesehatan</span>
+                <select name="akses_kesehatan" class="input"><option value="5">Puskesmas/Klinik</option><option value="3">Posyandu/Poli</option><option value="1">Tidak ada</option></select>
+              </label>
+              <label class="field"><span>BPJS kepesertaan</span>
+                <select name="bpjs" class="input"><option value="5">Semua anggota</option><option value="3">Sebagian</option><option value="1">Tidak ada</option></select>
+              </label>
+            </div>
+          </section>
+
+          <section id="tab-ekonomi" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Ekonomi (contoh)</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Status pekerjaan kepala rumah tangga</span>
+                <select name="pekerjaan" class="input"><option value="5">Wirausaha tetap</option><option value="4">Pegawai</option><option value="3">Pekerja lepas</option><option value="1">Tidak bekerja</option></select>
+              </label>
+              <label class="field"><span>Aset produktif</span>
+                <select name="aset" class="input"><option value="5">Memadai</option><option value="3">Terbatas</option><option value="1">Tidak ada</option></select>
+              </label>
+            </div>
+          </section>
+
+          <section id="tab-sarpras" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Sarana & Prasarana (contoh)</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Akses air bersih</span>
+                <select name="air_bersih" class="input"><option value="5">PAM/PDAM</option><option value="3">Sumur terlindung</option><option value="1">Permukaan/tercemar</option></select>
+              </label>
+              <label class="field"><span>Kondisi jalan</span>
+                <select name="jalan" class="input"><option value="5">Aspal baik</option><option value="3">Kerikil/aspal rusak</option><option value="1">Tanah</option></select>
+              </label>
+            </div>
+          </section>
+
+          <section id="tab-kelembagaan" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Kelembagaan (contoh)</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Keaktifan PKK</span><select name="pkk" class="input"><option value="5">Sangat aktif</option><option value="3">Kadang</option><option value="1">Tidak aktif</option></select></label>
+              <label class="field"><span>Keberadaan BUMDes</span><select name="bumdes" class="input"><option value="5">Ada & aktif</option><option value="3">Ada tapi pasif</option><option value="1">Tidak ada</option></select></label>
+            </div>
+          </section>
+
+          <section id="tab-potensi" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Potensi Desa (contoh)</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Potensi Pertanian</span><select name="pertanian" class="input"><option value="5">Sangat baik</option><option value="3">Cukup</option><option value="1">Terbatas</option></select></label>
+              <label class="field"><span>Pariwisata</span><select name="pariwisata" class="input"><option value="5">Ada & berkembang</option><option value="3">Ada tapi kecil</option><option value="1">Tidak ada</option></select></label>
+            </div>
+          </section>
+
+          <section id="tab-keamanan" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Keamanan</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Kondisi keamanan</span><select name="keamanan" class="input"><option value="5">Sangat aman</option><option value="3">Relatif aman</option><option value="1">Rawan</option></select></label>
+              <label class="field"><span>Siskamling aktif</span><select name="siskamling" class="input"><option value="5">Rutin</option><option value="3">Kadang</option><option value="1">Tidak</option></select></label>
+            </div>
+          </section>
+
+          <section id="tab-sosbud" class="tabpane hidden">
+            <h3 class="text-lg font-semibold mb-2">Sosial Budaya</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+              <label class="field"><span>Gotong royong</span><select name="gotong" class="input"><option value="5">Rutin</option><option value="3">Kadang</option><option value="1">Tidak</option></select></label>
+              <label class="field"><span>Pelestarian budaya</span><select name="budaya" class="input"><option value="5">Aktif</option><option value="3">Ada tapi terbatas</option><option value="1">Tidak</option></select></label>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="flex items-center space-x-3 pt-3">
+          <button id="btnCapture" type="button" class="btn">Ambil Lokasi & Tampilkan Peta</button>
+          <button id="btnSave" type="submit" class="btn bg-green-600">Simpan Data</button>
+          <button id="btnReset" type="button" class="btn bg-gray-600">Reset Form</button>
+          <div id="scorePreview" class="ml-auto text-sm opacity-80"></div>
+        </div>
+
+      </form>
+    </div>
+
+    <aside class="bg-gray-800 p-4 rounded-lg shadow">
+      <h3 class="font-semibold mb-2">Peta Lokasi Pengisi</h3>
+      <div id="map" style="height:360px;" class="rounded"></div>
+      <div class="mt-3 text-sm">
+        <div>Latitude: <span id="latText">-</span></div>
+        <div>Longitude: <span id="lngText">-</span></div>
+        <div class="mt-2"><button id="openDashboard" class="btn">Buka Dashboard</button></div>
+        <div class="mt-4 text-xs opacity-70">Catatan: lokasi diambil via browser (izin akses lokasi diperlukan).</div>
       </div>
+    </aside>
+  </div>
+</main>
 
-      <div id="identitas" class="tabcontent">
-        <h3>Identitas</h3>
-        <label>Nama Kepala Keluarga</label><input type="text" name="nama_kk" required><br>
-        <label>No KK</label><input type="text" name="no_kk" required><br>
-        <label>Dusun</label><input type="text" name="dusun" required><br>
-        <label>RW</label><input type="text" name="rw" required><br>
-        <label>RT</label><input type="text" name="rt" required><br>
-      </div>
+<footer class="text-center text-sm text-gray-400 py-4">© 2025 Pemerintah Desa Kebonrejo</footer>
 
-      <div id="kependudukan" class="tabcontent">
-        <h3>Kependudukan</h3>
-        <label>Jumlah Anggota Keluarga</label><input type="number" name="anggota" min="1"><br>
-        <label>Kondisi Rumah</label>
-        <select name="rumah">
-          <option value="5">Layak</option>
-          <option value="3">Kurang Layak</option>
-          <option value="1">Tidak Layak</option>
-        </select><br>
-      </div>
-
-      <div id="pendidikan" class="tabcontent">
-        <h3>Pendidikan</h3>
-        <label>Tingkat Pendidikan Tertinggi KK</label>
-        <select name="pendidikan">
-          <option value="5">Perguruan Tinggi</option>
-          <option value="4">SMA/SMK</option>
-          <option value="3">SMP</option>
-          <option value="2">SD</option>
-          <option value="1">Tidak Sekolah</option>
-        </select><br>
-      </div>
-
-      <div id="kesehatan" class="tabcontent">
-        <h3>Kesehatan</h3>
-        <label>Akses Layanan Kesehatan</label>
-        <select name="kesehatan">
-          <option value="5">Mudah</option>
-          <option value="3">Sedang</option>
-          <option value="1">Sulit</option>
-        </select><br>
-      </div>
-
-      <div id="sosbud" class="tabcontent">
-        <h3>Sosial Budaya</h3>
-        <label>Kegiatan Gotong Royong</label>
-        <select name="gotong">
-          <option value="5">Aktif</option>
-          <option value="3">Kadang</option>
-          <option value="1">Tidak Ada</option>
-        </select><br>
-      </div>
-
-      <div id="map" style="height:300px;"></div>
-      <input type="hidden" name="lat" id="lat">
-      <input type="hidden" name="lng" id="lng">
-
-      <button type="submit">💾 Simpan</button>
-    </form>
-  </main>
-
-  <footer>
-    <p>© 2025 Desa Kebonrejo | Prodeskel Kemendagri</p>
-  </footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="app.js"></script>
+<script src="map.js"></script>
+<script src="export.js"></script>
 </body>
 </html>
