@@ -1,1 +1,0 @@
-// map.js left intentionally light. Map initialization handled in app.js on capture.
